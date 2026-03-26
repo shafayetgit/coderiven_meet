@@ -3,19 +3,14 @@ services:
     web:
         image: jitsi/web:${JITSI_IMAGE_VERSION:-stable-10741}
         restart: ${RESTART_POLICY:-unless-stopped}
-        # Remove ports entirely if using Docker network routing
-        # ports:
-        #   - '127.0.0.1:${HTTP_PORT}:80'
+        ports:
+            - '${HTTP_PORT}:80'
+            - '${HTTPS_PORT}:443'
         volumes:
             - ${CONFIG}/web:/config:Z
             - ${CONFIG}/web/crontabs:/var/spool/cron/crontabs:Z
             - ${CONFIG}/transcripts:/usr/share/jitsi-meet/transcripts:Z
             - ${CONFIG}/web/load-test:/usr/share/jitsi-meet/load-test:Z
-            # For Codriven
-            - ./coderiven/images/coderiven-logo-light.svg:/usr/share/jitsi-meet/images/coderiven-logo-light.svg
-            - ./coderiven/images/favicon.ico:/usr/share/jitsi-meet/images/favicon.svg
-            - ./coderiven/css/all.css:/usr/share/jitsi-meet/css/all.css
-            - ./coderiven/interface_config.js:/defaults/interface_config.js
         labels:
             service: "jitsi-web"
         environment:
@@ -191,7 +186,7 @@ services:
             - WHITEBOARD_COLLAB_SERVER_PUBLIC_URL
             - WHITEBOARD_COLLAB_SERVER_URL_BASE
         networks:
-            erp-network:
+            meet.jitsi:
         depends_on:
             - jvb
 
@@ -342,7 +337,7 @@ services:
             - XMPP_SERVER_S2S_PORT
             - XMPP_SPEAKERSTATS_MODULES
         networks:
-            erp-network:
+            meet.jitsi:
                 aliases:
                     - ${XMPP_SERVER:-xmpp.meet.jitsi}
 
@@ -440,7 +435,7 @@ services:
         depends_on:
             - prosody
         networks:
-            erp-network:
+            meet.jitsi:
 
     # Video bridge
     jvb:
@@ -448,7 +443,7 @@ services:
         restart: ${RESTART_POLICY:-unless-stopped}
         ports:
             - '${JVB_PORT:-10000}:${JVB_PORT:-10000}/udp'
-            - '127.0.0.1:${JVB_COLIBRI_PORT:-8081}:8080'
+            - '127.0.0.1:${JVB_COLIBRI_PORT:-8080}:8080'
         volumes:
             - ${CONFIG}/jvb:/config:Z
         labels:
@@ -509,12 +504,8 @@ services:
         depends_on:
             - prosody
         networks:
-            erp-network:
-
-
-
+            meet.jitsi:
 
 # Custom network so all services can communicate using a FQDN
 networks:
-    erp-network:
-      external: true
+    meet.jitsi:
