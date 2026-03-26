@@ -14,7 +14,7 @@ services:
             # For Codriven
             - ./coderiven/images/coderiven-logo-light.svg:/usr/share/jitsi-meet/images/coderiven-logo-light.svg
             - ./coderiven/images/favicon.ico:/usr/share/jitsi-meet/images/favicon.svg
-            - ./coderiven/css/all.css:/usr/share/jitsi-meet/css/all.css
+            # - ./coderiven/css/all.css:/usr/share/jitsi-meet/css/all.css
             - ./coderiven/interface_config.js:/defaults/interface_config.js
         labels:
             service: "jitsi-web"
