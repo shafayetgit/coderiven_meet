@@ -4,8 +4,8 @@ services:
         image: jitsi/web:${JITSI_IMAGE_VERSION:-stable-10741}
         restart: ${RESTART_POLICY:-unless-stopped}
         # Remove ports entirely if using Docker network routing
-        # ports:
-        #   - '127.0.0.1:${HTTP_PORT}:80'
+        ports:
+          - '127.0.0.1:${HTTP_PORT}:80'
         volumes:
             - ${CONFIG}/web:/config:Z
             - ${CONFIG}/web/crontabs:/var/spool/cron/crontabs:Z
