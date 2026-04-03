@@ -263,7 +263,7 @@ var interfaceConfig = {
   DEFAULT_LOGO_URL: "images/coderiven-logo-light.svg", // Uncommented and updated
 
   // Please use defaultRemoteDisplayName from config.js
-  // DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Jitster',
+  DEFAULT_REMOTE_DISPLAY_NAME: 'Coderiven Guest', // Uncommented and updated
 
   // Moved to config.js as `toolbarConfig.initialTimeout`.
   // INITIAL_TOOLBAR_TIMEOUT: 20000,
